@@ -1,0 +1,121 @@
+<div class="quiz-container">
+  @if (!quiz.quizComplete()) {
+    <div class="question-wrapper" [@questionSlide]="quiz.currentIndex()">
+      <div class="progress-header">
+        <span class="progress-label">Question {{ quiz.currentIndex() + 1 }} of {{ quiz.totalQuestions }}</span>
+        <span class="progress-label">{{ progressValue }}%</span>
+      </div>
+      <mat-progress-bar
+        mode="determinate"
+        [value]="progressValue"
+        class="progress-bar"
+      ></mat-progress-bar>
+
+      <mat-card class="question-card" appearance="outlined">
+        <mat-card-header>
+          <mat-card-title class="question-text">
+            {{ quiz.currentQuestion().text }}
+          </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+          <mat-radio-group
+            class="options-group"
+            [(ngModel)]="selectedKey"
+            [disabled]="submitted()"
+            aria-label="Select an answer"
+          >
+            @for (option of quiz.currentQuestion().options; track option.key) {
+              <div
+                class="option-row"
+                [class.correct]="isCorrectSelection(option.key)"
+                [class.wrong]="isWrongSelection(option.key)"
+              >
+                <mat-radio-button [value]="option.key" class="option-radio">
+                  <span class="option-key">{{ option.key }}</span>
+                  <span class="option-text">{{ option.text }}</span>
+                </mat-radio-button>
+                @if (submitted()) {
+                  @if (isCorrectSelection(option.key)) {
+                    <mat-icon class="feedback-icon correct-icon">check_circle</mat-icon>
+                  }
+                  @if (isWrongSelection(option.key)) {
+                    <mat-icon class="feedback-icon wrong-icon">cancel</mat-icon>
+                  }
+                }
+              </div>
+            }
+          </mat-radio-group>
+        </mat-card-content>
+
+        <mat-card-actions class="card-actions">
+          @if (!submitted()) {
+            <button
+              mat-flat-button
+              [disabled]="!selectedKey()"
+              (click)="submit()"
+              class="action-btn"
+            >
+              <mat-icon>send</mat-icon>
+              Submit Answer
+            </button>
+          } @else {
+            <button mat-flat-button (click)="next()" class="action-btn next-btn">
+              <mat-icon>{{ isLastQuestion ? 'emoji_events' : 'arrow_forward' }}</mat-icon>
+              {{ isLastQuestion ? 'See Results' : 'Next Question' }}
+            </button>
+          }
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  } @else {
+    <div class="results-wrapper" [@fadeIn]>
+      <mat-card class="results-card" appearance="outlined">
+        <mat-card-header>
+          <mat-card-title class="results-title">Quiz Complete!</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div class="score-display">
+            <div class="score-percentage">{{ quiz.percentage() }}%</div>
+            <div class="score-fraction">
+              <mat-chip highlighted color="primary">
+                {{ quiz.score() }} / {{ quiz.totalQuestions }} correct
+              </mat-chip>
+            </div>
+            <p class="feedback-message">{{ feedbackMessage }}</p>
+          </div>
+
+          <div class="answer-review">
+            <h3 class="review-title">Review</h3>
+            @for (answer of quiz.answers(); track answer.questionId; let i = $index) {
+              <div class="review-item" [class.review-correct]="answer.isCorrect" [class.review-wrong]="!answer.isCorrect">
+                <div class="review-header">
+                  <mat-icon class="review-icon">{{ answer.isCorrect ? 'check_circle' : 'cancel' }}</mat-icon>
+                  <span class="review-question">{{ quiz.questions[i].text }}</span>
+                </div>
+                <div class="review-answers">
+                  <span class="your-answer" [class.wrong-text]="!answer.isCorrect">
+                    Your answer: {{ getOptionText(quiz.questions[i].options, answer.selectedKey) }}
+                  </span>
+                  @if (!answer.isCorrect) {
+                    <span class="correct-answer">
+                      Correct: {{ getOptionText(quiz.questions[i].options, quiz.questions[i].correctKey) }}
+                    </span>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        </mat-card-content>
+
+        <mat-card-actions class="card-actions">
+          <button mat-flat-button (click)="restart()" class="action-btn restart-btn">
+            <mat-icon>refresh</mat-icon>
+            Try Again
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  }
+</div>

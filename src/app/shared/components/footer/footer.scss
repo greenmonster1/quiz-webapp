@@ -1,0 +1,20 @@
+.site-footer {
+  margin-top: auto;
+  background-color: var(--mat-sys-surface-variant);
+}
+
+.footer-bottom {
+  padding: 16px 24px;
+  text-align: center;
+
+  p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--mat-sys-on-surface-variant);
+  }
+
+  .footer-sub {
+    font-style: italic;
+    margin-top: 4px;
+  }
+}
