@@ -1,6 +1,17 @@
 .site-footer {
   margin-top: auto;
   background-color: var(--mat-sys-surface-variant);
+  border-top: 4px solid transparent;
+  // Red / White / Blue stripe — pure CSS, no assets needed
+  border-image: linear-gradient(
+    to right,
+    var(--america-red) 0%,
+    var(--america-red) 33.3%,
+    #ffffff 33.3%,
+    #ffffff 66.6%,
+    var(--america-blue) 66.6%,
+    var(--america-blue) 100%
+  ) 1;
 }
 
 .footer-bottom {
@@ -13,8 +24,7 @@
     color: var(--mat-sys-on-surface-variant);
   }
 
-  .footer-sub {
-    font-style: italic;
-    margin-top: 4px;
+  strong {
+    color: var(--mat-sys-on-surface);
   }
 }

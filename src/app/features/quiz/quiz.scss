@@ -30,6 +30,7 @@
 .question-card,
 .results-card {
   border-radius: 16px !important;
+  border-top: 4px solid var(--america-red) !important;
 }
 
 .question-text {
@@ -37,6 +38,7 @@
   font-weight: 600 !important;
   line-height: 1.5 !important;
   white-space: normal !important;
+  font-family: 'Playfair Display', serif !important;
 }
 
 .options-group {
@@ -56,13 +58,13 @@
   cursor: pointer;
 
   &:hover:not(.correct):not(.wrong) {
-    border-color: var(--mat-sys-primary);
-    background-color: color-mix(in srgb, var(--mat-sys-primary) 6%, transparent);
+    border-color: var(--america-red);
+    background-color: color-mix(in srgb, var(--america-red) 6%, transparent);
   }
 
   &.correct {
-    border-color: var(--mat-sys-tertiary);
-    background-color: color-mix(in srgb, var(--mat-sys-tertiary) 12%, transparent);
+    border-color: var(--america-blue);
+    background-color: color-mix(in srgb, var(--america-blue) 10%, transparent);
   }
 
   &.wrong {
@@ -82,7 +84,7 @@
 .option-key {
   font-weight: 700;
   margin-right: 10px;
-  color: var(--mat-sys-primary);
+  color: var(--america-red);
   min-width: 20px;
 }
 
@@ -98,7 +100,7 @@
   flex-shrink: 0;
 
   &.correct-icon {
-    color: var(--mat-sys-tertiary);
+    color: var(--america-blue);
   }
 
   &.wrong-icon {
@@ -117,17 +119,19 @@
   font-size: 0.95rem;
   font-weight: 600;
   border-radius: 22px !important;
+  letter-spacing: 0.02em;
 }
 
 .next-btn {
-  background-color: var(--mat-sys-tertiary) !important;
-  color: var(--mat-sys-on-tertiary) !important;
+  background-color: var(--america-blue) !important;
+  color: #ffffff !important;
 }
 
 // Results
 .results-title {
   font-size: 1.5rem !important;
   font-weight: 700 !important;
+  font-family: 'Playfair Display', serif !important;
 }
 
 .score-display {
@@ -139,7 +143,8 @@
   font-size: 4.5rem;
   font-weight: 700;
   line-height: 1;
-  color: var(--mat-sys-primary);
+  color: var(--america-red);
+  font-family: 'Playfair Display', serif;
   margin-bottom: 12px;
 }
 
@@ -158,12 +163,12 @@
 }
 
 .review-title {
-  font-size: 1rem;
+  font-size: 0.8rem;
   font-weight: 600;
   margin: 0 0 12px;
   color: var(--mat-sys-on-surface-variant);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
 }
 
 .review-item {
@@ -173,8 +178,8 @@
   border-left: 4px solid transparent;
 
   &.review-correct {
-    border-left-color: var(--mat-sys-tertiary);
-    background-color: color-mix(in srgb, var(--mat-sys-tertiary) 8%, transparent);
+    border-left-color: var(--america-blue);
+    background-color: color-mix(in srgb, var(--america-blue) 8%, transparent);
   }
 
   &.review-wrong {
@@ -198,7 +203,7 @@
   margin-top: 2px;
 
   .review-correct & {
-    color: var(--mat-sys-tertiary);
+    color: var(--america-blue);
   }
 
   .review-wrong & {
@@ -231,13 +236,13 @@
 }
 
 .correct-answer {
-  color: var(--mat-sys-tertiary) !important;
+  color: var(--america-blue) !important;
   font-weight: 600;
 }
 
 .restart-btn {
-  background-color: var(--mat-sys-primary) !important;
-  color: var(--mat-sys-on-primary) !important;
+  background-color: var(--america-red) !important;
+  color: #ffffff !important;
 }
 
 // Responsive

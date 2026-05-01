@@ -2,9 +2,9 @@ import { QuizQuestion } from '../models/quiz';
 
 export const SITE_URL = 'https://quiz-webapp.example.com';
 
-export const QUIZ_TITLE = 'Quiz App - Test Your Knowledge';
+export const QUIZ_TITLE = 'America 250 Quiz - Test Your Knowledge';
 export const QUIZ_DESCRIPTION =
-  'Test your knowledge with our interactive quiz. Answer questions on science, art, and history.';
+  'Celebrate America\'s 250th anniversary! Test your knowledge of US history, culture, and heritage.';
 
 export const QUIZ_QUESTIONS: QuizQuestion[] = [
   {

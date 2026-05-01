@@ -2,7 +2,8 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  background-color: var(--america-blue) !important;
+  box-shadow: 0 3px 0 var(--america-red), 0 3px 10px rgba(0, 0, 0, 0.35);
 }
 
 .brand {
@@ -10,14 +11,17 @@
   align-items: center;
   gap: 8px;
   text-decoration: none;
-  color: inherit;
+  color: #ffffff;
   font-size: 1.3rem;
   font-weight: 700;
+  font-family: 'Playfair Display', serif;
+  letter-spacing: 0.01em;
 
   .brand-icon {
     font-size: 1.6rem;
     width: 1.6rem;
     height: 1.6rem;
+    color: var(--america-gold);
   }
 }
 
@@ -26,9 +30,11 @@
 }
 
 .brand-tagline {
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   opacity: 0.85;
   font-style: italic;
+  color: #ffffff;
+  letter-spacing: 0.03em;
 
   &.hidden {
     display: none;

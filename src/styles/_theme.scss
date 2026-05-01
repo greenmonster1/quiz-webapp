@@ -1,28 +1,55 @@
 @use '@angular/material' as mat;
 
+// Official US flag colors (public domain)
+// Red: Pantone 193 C — Blue: Pantone 281 C
+:root {
+  --america-red: #BF0A30;
+  --america-blue: #002868;
+  --america-gold: #FFD700;
+}
+
 html {
   @include mat.theme((
     color: (
-      primary: mat.$azure-palette,
-      tertiary: mat.$cyan-palette,
+      primary: mat.$red-palette,
+      tertiary: mat.$blue-palette,
       theme-type: light,
     ),
     typography: (
       plain-family: 'Inter, sans-serif',
-      brand-family: 'Inter, sans-serif',
+      brand-family: 'Playfair Display, serif',
     ),
     density: 0,
   ));
+
+  // Pin to exact flag colors after M3 tonal generation
+  --mat-sys-primary: #BF0A30;
+  --mat-sys-on-primary: #ffffff;
+  --mat-sys-primary-container: #ffdad9;
+  --mat-sys-on-primary-container: #410007;
+  --mat-sys-tertiary: #002868;
+  --mat-sys-on-tertiary: #ffffff;
+  --mat-sys-tertiary-container: #d8e2ff;
+  --mat-sys-on-tertiary-container: #001849;
 }
 
 @media (prefers-color-scheme: dark) {
   html {
     @include mat.theme((
       color: (
-        primary: mat.$azure-palette,
-        tertiary: mat.$cyan-palette,
+        primary: mat.$red-palette,
+        tertiary: mat.$blue-palette,
         theme-type: dark,
       ),
     ));
+
+    --mat-sys-primary: #ffb3ad;
+    --mat-sys-on-primary: #68000f;
+    --mat-sys-primary-container: #920018;
+    --mat-sys-on-primary-container: #ffdad9;
+    --mat-sys-tertiary: #afc6ff;
+    --mat-sys-on-tertiary: #002e6d;
+    --mat-sys-tertiary-container: #00429a;
+    --mat-sys-on-tertiary-container: #d8e2ff;
   }
 }
