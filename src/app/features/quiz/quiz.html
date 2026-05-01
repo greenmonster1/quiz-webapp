@@ -92,15 +92,15 @@
               <div class="review-item" [class.review-correct]="answer.isCorrect" [class.review-wrong]="!answer.isCorrect">
                 <div class="review-header">
                   <mat-icon class="review-icon">{{ answer.isCorrect ? 'check_circle' : 'cancel' }}</mat-icon>
-                  <span class="review-question">{{ quiz.questions[i].text }}</span>
+                  <span class="review-question">{{ quiz.questions()[i].text }}</span>
                 </div>
                 <div class="review-answers">
                   <span class="your-answer" [class.wrong-text]="!answer.isCorrect">
-                    Your answer: {{ getOptionText(quiz.questions[i].options, answer.selectedKey) }}
+                    Your answer: {{ getOptionText(quiz.questions()[i].options, answer.selectedKey) }}
                   </span>
                   @if (!answer.isCorrect) {
                     <span class="correct-answer">
-                      Correct: {{ getOptionText(quiz.questions[i].options, quiz.questions[i].correctKey) }}
+                      Correct: {{ getOptionText(quiz.questions()[i].options, quiz.questions()[i].correctKey) }}
                     </span>
                   }
                 </div>

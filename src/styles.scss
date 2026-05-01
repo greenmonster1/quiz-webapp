@@ -21,6 +21,13 @@ app-root {
 
 main {
   flex: 1 0 auto;
+  /* Subtle patriotic wash — shows only in whitespace between/around cards */
+  background: linear-gradient(
+    160deg,
+    rgba(191, 10, 48, 0.06) 0%,
+    rgba(255, 255, 255, 0) 42%,
+    rgba(0, 40, 104, 0.06) 100%
+  );
 }
 
 a {

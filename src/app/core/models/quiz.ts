@@ -10,6 +10,7 @@ export interface QuizQuestion {
   text: string;
   options: QuizOption[];
   correctKey: AnswerKey;
+  isAsterisk?: boolean;
 }
 
 export interface UserAnswer {

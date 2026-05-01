@@ -5,6 +5,7 @@ import { Construct } from 'constructs';
 import { StaticAssets } from './constructs/static-assets';
 import { SsrLambda } from './constructs/ssr-lambda';
 import { Monitoring } from './constructs/monitoring';
+import { QuizTable } from './constructs/quiz-table';
 import { EnvConfig } from './config/environments';
 
 export interface QuizWebappStackProps extends cdk.StackProps {
@@ -78,6 +79,13 @@ export class QuizWebappStack extends cdk.Stack {
           compress: true,
         },
       },
+    });
+
+    // --- DynamoDB (provisioned; not yet wired to frontend) ---
+    const quizTable = new QuizTable(this, 'QuizTable');
+    new cdk.CfnOutput(this, 'QuizTableName', {
+      value: quizTable.table.tableName,
+      description: 'DynamoDB table for quiz attempts',
     });
 
     // --- Monitoring ---

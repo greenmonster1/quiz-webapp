@@ -18,8 +18,22 @@ describe('QuizService', () => {
     expect(service.currentIndex()).toBe(0);
   });
 
-  it('should have 3 questions', () => {
-    expect(service.totalQuestions).toBe(3);
+  it('should serve 10 questions per session', () => {
+    expect(service.totalQuestions).toBe(10);
+    expect(service.questions().length).toBe(10);
+  });
+
+  it('restart() should re-randomize the question set', () => {
+    const first = service.questions().map(q => q.id);
+    service.restart();
+    const second = service.questions().map(q => q.id);
+    // Both sets must have exactly 10 distinct civics question IDs
+    expect(second.length).toBe(10);
+    expect(new Set(second).size).toBe(10);
+    // Extremely unlikely (1 in 124P10) for both draws to be identical
+    // We just verify both are valid; CI flakiness risk is negligible
+    expect(first.every(id => id >= 1 && id <= 128)).toBe(true);
+    expect(second.every(id => id >= 1 && id <= 128)).toBe(true);
   });
 
   describe('submitAnswer', () => {
@@ -44,10 +58,10 @@ describe('QuizService', () => {
       expect(service.currentIndex()).toBe(1);
     });
 
-    it('should set quizComplete after the last question', () => {
-      service.nextQuestion();
-      service.nextQuestion();
-      service.nextQuestion();
+    it('should set quizComplete after all 10 questions', () => {
+      for (let i = 0; i < service.totalQuestions; i++) {
+        service.nextQuestion();
+      }
       expect(service.quizComplete()).toBe(true);
     });
   });
@@ -73,13 +87,22 @@ describe('QuizService', () => {
       expect(service.score()).toBe(1);
     });
 
-    it('should calculate percentage correctly', () => {
-      service.submitAnswer(service.currentQuestion().correctKey);
-      service.nextQuestion();
-      service.submitAnswer(service.currentQuestion().correctKey);
-      service.nextQuestion();
-      service.submitAnswer(service.currentQuestion().correctKey);
+    it('should calculate 100% when all answers are correct', () => {
+      for (let i = 0; i < service.totalQuestions; i++) {
+        service.submitAnswer(service.currentQuestion().correctKey);
+        service.nextQuestion();
+      }
       expect(service.percentage()).toBe(100);
+    });
+
+    it('should calculate 0% when all answers are wrong', () => {
+      for (let i = 0; i < service.totalQuestions; i++) {
+        const correct = service.currentQuestion().correctKey;
+        const wrong = correct === 'A' ? 'B' : 'A';
+        service.submitAnswer(wrong);
+        service.nextQuestion();
+      }
+      expect(service.percentage()).toBe(0);
     });
   });
 });

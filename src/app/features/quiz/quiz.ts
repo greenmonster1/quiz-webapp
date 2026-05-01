@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   trigger,
   transition,
@@ -13,9 +13,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { FormsModule } from '@angular/forms';
 import { QuizService } from '../../core/services/quiz';
-import { SeoService } from '../../core/services/seo';
 import { AnswerKey, QuizOption } from '../../core/models/quiz';
-import { QUIZ_TITLE, QUIZ_DESCRIPTION, SITE_URL } from '../../core/constants/quiz';
+import { FEEDBACK_THRESHOLDS } from '../../core/constants/quiz';
 
 @Component({
   selector: 'app-quiz',
@@ -49,32 +48,11 @@ import { QUIZ_TITLE, QUIZ_DESCRIPTION, SITE_URL } from '../../core/constants/qui
     ]),
   ],
 })
-export class Quiz implements OnInit {
+export class Quiz {
   readonly quiz = inject(QuizService);
-  private readonly seo = inject(SeoService);
 
   readonly selectedKey = signal<AnswerKey | null>(null);
   readonly submitted = signal(false);
-
-  ngOnInit(): void {
-    this.seo.updateMeta({
-      title: QUIZ_TITLE,
-      description: QUIZ_DESCRIPTION,
-      url: SITE_URL,
-    });
-    this.seo.setJsonLd({
-      '@context': 'https://schema.org',
-      '@type': 'Quiz',
-      name: QUIZ_TITLE,
-      description: QUIZ_DESCRIPTION,
-      url: SITE_URL,
-      potentialAction: {
-        '@type': 'QuizAction',
-        name: 'Take the Quiz',
-        target: SITE_URL,
-      },
-    });
-  }
 
   get progressValue(): number {
     return Math.round(((this.quiz.currentIndex() + 1) / this.quiz.totalQuestions) * 100);
@@ -86,9 +64,8 @@ export class Quiz implements OnInit {
 
   get feedbackMessage(): string {
     const pct = this.quiz.percentage();
-    if (pct >= 80) return 'Excellent! You\'re a trivia master! 🏆';
-    if (pct >= 50) return 'Good effort! Keep practicing. 💪';
-    return 'Keep studying — you\'ll get there! 📚';
+    const tier = FEEDBACK_THRESHOLDS.find(t => pct >= t.minPct);
+    return tier?.message ?? '';
   }
 
   isCorrectOption(key: AnswerKey): boolean {

@@ -1,21 +1,32 @@
-import { Injectable, signal, computed } from '@angular/core';
-import { QUIZ_QUESTIONS } from '../constants/quiz';
+import { Injectable, signal, computed, inject } from '@angular/core';
+import { QUESTION_BANK, QUIZ_POOL_SIZE } from '../constants/quiz';
 import { QuizQuestion, AnswerKey, UserAnswer } from '../models/quiz';
 
 @Injectable({ providedIn: 'root' })
 export class QuizService {
-  readonly questions: QuizQuestion[] = QUIZ_QUESTIONS;
-  readonly totalQuestions = this.questions.length;
+  readonly #bank = inject(QUESTION_BANK);
+
+  readonly questions = signal<QuizQuestion[]>(this.#sample());
+  readonly totalQuestions = QUIZ_POOL_SIZE;
 
   readonly currentIndex = signal(0);
   readonly answers = signal<UserAnswer[]>([]);
   readonly quizComplete = signal(false);
 
-  readonly currentQuestion = computed(() => this.questions[this.currentIndex()]);
+  readonly currentQuestion = computed(() => this.questions()[this.currentIndex()]);
   readonly score = computed(() => this.answers().filter(a => a.isCorrect).length);
   readonly percentage = computed(() =>
     Math.round((this.score() / this.totalQuestions) * 100),
   );
+
+  #sample(): QuizQuestion[] {
+    const pool = [...this.#bank];
+    for (let i = pool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+    return pool.slice(0, QUIZ_POOL_SIZE);
+  }
 
   submitAnswer(selectedKey: AnswerKey): void {
     const q = this.currentQuestion();
@@ -35,6 +46,7 @@ export class QuizService {
   }
 
   restart(): void {
+    this.questions.set(this.#sample());
     this.currentIndex.set(0);
     this.answers.set([]);
     this.quizComplete.set(false);

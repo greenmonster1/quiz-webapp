@@ -2,12 +2,6 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { Quiz } from './quiz';
 import { QuizService } from '../../core/services/quiz';
-import { SeoService } from '../../core/services/seo';
-
-const mockSeoService = {
-  updateMeta: vi.fn(),
-  setJsonLd: vi.fn(),
-};
 
 describe('Quiz', () => {
   let fixture: ComponentFixture<Quiz>;
@@ -15,13 +9,9 @@ describe('Quiz', () => {
   let quizService: QuizService;
 
   beforeEach(async () => {
-    vi.clearAllMocks();
     await TestBed.configureTestingModule({
       imports: [Quiz],
-      providers: [
-        provideAnimations(),
-        { provide: SeoService, useValue: mockSeoService },
-      ],
+      providers: [provideAnimations()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(Quiz);
@@ -35,18 +25,9 @@ describe('Quiz', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call SeoService.updateMeta on init', () => {
-    expect(mockSeoService.updateMeta).toHaveBeenCalledOnce();
-  });
-
-  it('should inject Quiz JSON-LD schema', () => {
-    const [schema] = mockSeoService.setJsonLd.mock.calls[0];
-    expect((schema as Record<string, string>)['@type']).toBe('Quiz');
-  });
-
-  it('should show the first question text', () => {
+  it('should show a non-empty question text', () => {
     const title = fixture.nativeElement.querySelector('.question-text') as HTMLElement;
-    expect(title?.textContent?.trim()).toContain('Red Planet');
+    expect(title?.textContent?.trim().length).toBeGreaterThan(0);
   });
 
   it('should disable Submit button when no answer is selected', () => {

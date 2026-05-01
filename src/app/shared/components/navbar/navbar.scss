@@ -17,11 +17,16 @@
   font-family: 'Playfair Display', serif;
   letter-spacing: 0.01em;
 
-  .brand-icon {
-    font-size: 1.6rem;
-    width: 1.6rem;
-    height: 1.6rem;
-    color: var(--america-gold);
+  @media (max-width: 480px) {
+    font-size: 1.05rem;
+  }
+
+  .brand-flag {
+    font-size: 1.7rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
   }
 }
 
