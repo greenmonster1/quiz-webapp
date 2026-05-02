@@ -22,7 +22,7 @@ export class QuizTable extends Construct {
       // RETAIN so a cdk destroy never drops prod quiz history
       removalPolicy: cdk.RemovalPolicy.RETAIN,
       timeToLiveAttribute: 'ttl',
-      pointInTimeRecovery: true,
+      pointInTimeRecoverySpecification: { pointInTimeRecoveryEnabled: true },
     });
 
     // GSI1: future leaderboard — query by LEADERBOARD PK, rank by score desc
