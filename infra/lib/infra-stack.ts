@@ -10,13 +10,14 @@ import { EnvConfig } from './config/environments';
 
 export interface QuizWebappStackProps extends cdk.StackProps {
   envConfig: EnvConfig;
+  envName: string;
 }
 
 export class QuizWebappStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props: QuizWebappStackProps) {
     super(scope, id, props);
 
-    const { envConfig } = props;
+    const { envConfig, envName } = props;
 
     // Paths to Angular build output (relative to infra/lib directory)
     const distRoot = path.join(__dirname, '..', '..', 'dist', 'quiz-webapp');
@@ -82,7 +83,7 @@ export class QuizWebappStack extends cdk.Stack {
     });
 
     // --- DynamoDB (provisioned; not yet wired to frontend) ---
-    const quizTable = new QuizTable(this, 'QuizTable');
+    const quizTable = new QuizTable(this, 'QuizTable', { envName });
     new cdk.CfnOutput(this, 'QuizTableName', {
       value: quizTable.table.tableName,
       description: 'DynamoDB table for quiz attempts',

@@ -20,6 +20,7 @@ new QuizWebappStack(app, `QuizWebapp-${envName}`, {
     region: envConfig.region,
   },
   envConfig,
+  envName,
   tags: {
     project: 'quiz-app',
     Environment: envName,
