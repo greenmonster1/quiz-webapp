@@ -1,7 +1,7 @@
 import { InjectionToken } from '@angular/core';
 import { QuizQuestion } from '../models/quiz';
 
-export const SITE_URL = 'https://quiz-webapp.example.com';
+export const SITE_URL = 'https://d27c0645hiq9es.cloudfront.net';
 
 export const QUIZ_TITLE = 'U.S. Civics Quiz — 2025 Edition';
 export const QUIZ_DESCRIPTION =

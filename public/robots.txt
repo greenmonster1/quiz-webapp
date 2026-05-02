@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://quiz-webapp.example.com/sitemap.xml
+Sitemap: https://d27c0645hiq9es.cloudfront.net/sitemap.xml
