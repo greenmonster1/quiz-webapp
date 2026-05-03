@@ -12,6 +12,9 @@ node_modules/
 # CDK
 infra/cdk.out
 
+# Claude Code local settings (machine-specific paths)
+.claude/settings.local.json
+
 # Node
 npm-debug.log
 yarn-error.log

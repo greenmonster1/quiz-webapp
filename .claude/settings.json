@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(aws sts *)",
+      "Bash(aws dynamodb describe-table *)",
+      "Bash(aws dynamodb list-tables *)",
+      "Bash(npm view *)",
+      "mcp__Claude_in_Chrome__tabs_context_mcp"
+    ]
+  }
+}
